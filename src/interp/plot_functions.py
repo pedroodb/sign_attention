@@ -6,8 +6,26 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
+from matplotlib.axes import Axes
 
 from hyperparameters import HyperParameters
+
+
+def set_xaxis_labels_to_percentage(ax: Axes, attn_weights: torch.Tensor) -> None:
+    """
+    Set the x-axis labels to percentage values.
+    Args:
+        ax (Axes): Axis object.
+        attn_weights (torch.Tensor): Attention weights of shape (B, N, L) where B is the batch size, N is the number of words and L is the number of words in the source sentence.
+    """
+    max_value = attn_weights.shape[1]
+    percentages = ["0", "25", "50", "75", "100"]
+    num_partitions = len(percentages)
+    step = max_value / (num_partitions - 1)
+    partitions = [i * step for i in range(num_partitions)]
+    ax.set_xticks(partitions, percentages)
+    ax.set_xlim(0, max_value)
+    ax.set_xticklabels(ax.get_xticklabels(), rotation=0)
 
 
 def plot_encoder_layers(
@@ -51,6 +69,7 @@ def plot_encoder_layers(
         plt.savefig(
             f"{output_path}/attn_self_heatmaps_encoder_layers.{file_extension}",
             dpi=150,
+            bbox_inches="tight",
             transparent=transparent,
         )
     return fig, ax
@@ -104,28 +123,21 @@ def plot_decoder_layers(
             ax.set_aspect("auto")
             ax.set_yticklabels(tgt_sent, rotation=0)
 
-            ax.set_ylabel("Predicted token", fontsize=12)
+            ax.set_ylabel("Predicted gloss", fontsize=12)
             ax.set_xlabel("Percentage of the video", fontsize=12)
 
             if mode == "self":
                 ax.set_xticklabels(tgt_sent, rotation=90)
             else:
-                # FIXME: This is a hack to make the x-axis labels show up correctly
-                max_value = attn_weights.shape[1]
-                percentages = ["0", "25", "50", "75", "100"]
-                num_partitions = len(percentages)
-                step = max_value / (num_partitions - 1)
-                partitions = [i * step for i in range(num_partitions)]
-                ax.set_xticks(partitions, ["0", "25", "50", "75", "100"])
-                ax.set_xlim(0, max_value)
-                ax.set_xticklabels(ax.get_xticklabels(), rotation=0)
+                set_xaxis_labels_to_percentage(ax, attn_weights)
             ax.set_title(f"Layer {layer + 1}") if token == 0 else None
     plt.subplots_adjust(wspace=0.4, hspace=0.4)
     if output_path:
         file_extension = "png" if transparent else "jpg"
         plt.savefig(
             f"{output_path}/attn_{mode}_heatmaps_decoder_layers.{file_extension}",
-            dpi=150,
+            dpi=300,
+            bbox_inches="tight",
             transparent=transparent,
         )
     return fig, axes
@@ -202,14 +214,7 @@ def plot_decoder_attn_per_frame(
             ax = sns.lineplot(df_attn_weights, dashes=False, ax=ax)
             ax.legend(loc="lower right", fontsize=8)
 
-        # FIXME: This is a hack to make the x-axis labels show up correctly
-        max_value = attn_weights.shape[1]
-        percentages = ["0", "25", "50", "75", "100"]
-        num_partitions = len(percentages)
-        step = max_value / (num_partitions - 1)
-        partitions = [i * step for i in range(num_partitions)]
-        ax.set_xticks(partitions, ["0", "25", "50", "75", "100"])
-        ax.set_xlim(0, max_value)
+        set_xaxis_labels_to_percentage(ax, attn_weights)
 
     if output_path is not None:
         file_extension = "png" if transparent else "jpg"
