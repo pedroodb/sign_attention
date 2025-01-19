@@ -21,13 +21,13 @@ pip install -r requirements.txt
 We utilize the Greek Sign Language Dataset, which contains 10,290 samples of RGB videos, gloss annotations, and Greek language translations. This dataset is ideal for interpretability analysis due to its detailed gloss annotations and repetition of sentences. Download the dataset [here](https://vcl.iti.gr/dataset/gsl/).
 
 ## Experiments
-We conducted extensive experiments to evaluate the interpretability of a Transformer model for sign language translation. You can view the poster we presented at NeurIPS 2024, which includes sample visualizations of the attention mechanisms analyzed in the paper, by clicking the link below:
+You can view the poster we presented at NeurIPS 2024, which includes sample visualizations of the attention mechanisms analyzed in the paper, by clicking the link below:
 
 [Poster for NeurIPS 2024](https://neurips.cc/media/PosterPDFs/NeurIPS%202024/99148.png?t=1733288876.9028351)
 
 ## Usage
 
-```bash
+```
 - src/train.ipynb                          : Train the model
 
 - src/get_interp_weights.ipynb             : Obtain attention weights
