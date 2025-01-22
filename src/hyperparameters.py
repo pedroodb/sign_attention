@@ -3,7 +3,7 @@ from typing import TypedDict, Optional
 
 import torch
 
-from SLTDataset import InputType, OutputType
+from slt_datasets.SLTDataset import InputType, OutputType
 from posecraft.Pose import Component, Pose
 from posecraft.transforms import (
     CenterToKeypoint,

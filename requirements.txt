@@ -8,3 +8,5 @@ torch==2.4.0
 torchmetrics==1.4.1
 torchvision==0.19.0
 tqdm==4.66.5
+slt_datasets
+posecraft

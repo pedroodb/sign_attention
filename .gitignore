@@ -1,13 +1,8 @@
-datasets
 lightning_logs
 wandb
-downloads
-rwth_phoenix2014_t
-.DS_Store
 __pycache__/
 visualizations/
 checkpoint/
 results/
 *.mp4
 .temp
-dataset_formatting
