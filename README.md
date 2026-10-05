@@ -1,5 +1,7 @@
 # SignAttention: On the Interpretability of Transformer Models for Sign Language Translation
 
+Code of the paper *SignAttention: On the Interpretability of Transformer Models for Sign Language Translation* (Interpretable AI and LatinX in AI workshops, NeurIPS 2024). Archived: not maintained.
+
 Official PyTorch implementation of [SignAttention: On the Interpretability of Transformer Models for Sign Language Translation](https://arxiv.org/abs/2410.14506)  
 Accepted at IAI Workshop @ NeurIPS 2024  
 
